@@ -1,0 +1,30 @@
+@layer reset;
+
+@import url('reset.css') layer(reset);
+
+@layer base {
+	body {
+		/* max-width: 40rem;
+		margin-left: auto;
+		margin-right: auto; */
+		margin-left: 2rem;
+		margin-right: 2rem;
+	}
+
+	main > div {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		grid-template-rows: 1fr;
+		gap: 3rem;
+	}
+
+	.channel-list-wrapper {
+		min-width: fit-content;
+	}
+
+	.message-list {
+		
+	}
+
+
+}

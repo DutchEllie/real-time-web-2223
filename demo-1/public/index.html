@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hi</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script>
+      var socket = io();
+    </script> -->
+    <script src="/static/index.js" defer></script>
+  </head>
+  <body>
+    <main>
+			<!-- <section class="register-wrapper">
+				<form>
+					<input type=">
+				</form>
+			</section> -->
+      <div>
+        <div class="channel-list-wrapper">
+          <h2>Channel list</h2>
+          <ul class="channel-list"></ul>
+        </div>
+        <div class="message-list-wrapper">
+          <h2></h2>
+          <ul class="message-list"></ul>
+        </div>
+				<div class="user-list-wrapper">
+					<h2>User list</h2>
+					<ul class="users-list"></ul>
+				</div>
+      </div>
+      <form class="message-form">
+        <input type="text" name="message" id="message" />
+        <button>Send</button>
+      </form>
+    </main>
+  </body>
+</html>
