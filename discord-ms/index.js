@@ -19,7 +19,7 @@ const discordApp = new DiscordApp(discordToken);
 
 const onConnection = (socket) => {
 	// console.log("a user connected");
-	messageHandler(io, socket);
+	messageHandler(io, socket, discordApp);
 	discordApp.setSocket(io);
 
 	// discordApp.sendMessage();
