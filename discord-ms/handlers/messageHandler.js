@@ -104,8 +104,13 @@ export default function messageHandler(io, socket, discord) {
       polls.vote(data.id, data.vote);
       callback({
         status: "ok",
+      });
+
+      io.emit("poll:vote", {
+        status: "ok",
         poll: polls.getPoll(data.id),
       });
+
     } catch(e) {
       console.log(e);
       callback({
