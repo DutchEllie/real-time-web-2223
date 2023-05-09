@@ -14,7 +14,22 @@ They can also be interacted with through both the webclient and Discord in realt
 
 ### MoSCoW
 
-TODO:::
+**Must have**:
+* Realtime interaction between web interface, backend and Discord
+* Ability to send messages from either platform
+* Ability to vote on polls on either platform
+* Creating polls on Discord
+
+**Should have**:
+* Creating polls on web interface
+
+**Could have**:
+* A stylish web interface
+* Only being able to vote on a poll once
+
+**Won't have**:
+* A real database
+
 
 ## Installation
 
