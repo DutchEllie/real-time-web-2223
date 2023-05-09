@@ -41,6 +41,10 @@
       if (response.status == "ok") {
         console.log("Poll received");
         if (response.poll) {
+					if(response.poll.id != data.id) {
+						console.log("Vote received for another poll");
+						return;
+					};
           poll = response.poll;
           totalVotes = poll.options.reduce(
             (acc, option) => acc + option.votes,
