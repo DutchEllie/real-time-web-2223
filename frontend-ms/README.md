@@ -12,7 +12,20 @@ Lastly, there is also a realtime poll system.
 Polls can be created through Discord and are visible on both the website and Discord.
 They can also be interacted with through both the webclient and Discord in realtime.
 
-### Communication
+## Installation
+
+To install this project, you need to run two applications: the frontend and the backend.
+
+### Backend
+
+Inside of the `discord-ms` directory, create a `.env` file that contains a variable `DISCORD_TOKEN` which is your Discord token.
+After creating that, run `npm install` followed by `npm run dev` and the project will start.
+
+### Frontend
+
+Inside of the `frontend-ms` directory, simply run `npm install` and `npm run dev` to run the project.
+
+## Communication
 
 Communication between client and server is done via WebSockets.
 When the client sends a message to the server, the server is meant to reply in a certain way, but always with at least an "Ack" response message.
@@ -67,3 +80,23 @@ This is to simplify the communication, since broadcast messages do not have to b
   This tells the server to vote on a poll.
 	The included fields are `id` for the poll's ID and a string containing the option to vote on.
 	Returned is a generic acknowledge object.
+
+### Communication with Discord
+
+The communication with Discord is handled through the Discord.js library for NodeJS.
+I have put the entire logic for the Discord bot inside the `discord.js` file located in `/src` and put it inside of a class to make it managable.
+This is done to separate code and make it less of a mess.
+The Discord object is created inside of `index.js` and passed through to the `messageHandler` function which handles all of the websocket communication.
+
+## Database
+
+The "database" for this project is a json file created by the backend and saved there as well.
+This is because there wasn't much time and this was the fastest solution.
+Even though it isn't a real database, I will continue to call it that.
+
+The database logic is handled inside of `pollService.js` through a class.
+This class is very much stateless and simply provides the logic for getting data and creating it inside of the JSON file.
+The fact that it is stateless means you can create as many instances of it as you want, it will write to the same file.
+
+Q: Is there any protection against race conditions when two instances try to write at the same time?  
+A: idk
