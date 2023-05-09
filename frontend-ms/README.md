@@ -12,6 +12,10 @@ Lastly, there is also a realtime poll system.
 Polls can be created through Discord and are visible on both the website and Discord.
 They can also be interacted with through both the webclient and Discord in realtime.
 
+### MoSCoW
+
+TODO:::
+
 ## Installation
 
 To install this project, you need to run two applications: the frontend and the backend.
@@ -100,3 +104,42 @@ The fact that it is stateless means you can create as many instances of it as yo
 
 Q: Is there any protection against race conditions when two instances try to write at the same time?  
 A: idk
+
+### Data model / lifecycle
+
+The database only stores polls, not messages.
+Messages are already stored inside of Discord and persist there, so there is no reason to save those.
+
+A poll is a Javascript object with the following (Typescript) specification:
+
+```ts
+interface Option {
+	title: string,
+	votes: number,
+}
+
+interface Poll {
+	id: string,
+	title: string,
+	description: string,
+	options: Option[],
+}
+```
+
+When a poll gets created through Discord, the Discord bot first handles the command and tells the `pollService` to create a poll, adding it to the database.
+
+When a user votes on the poll inside Discord, the Discord bot handles that request and then again tells the `pollService` to add a vote.
+This is done by obtaining the poll, the option and then adding 1 to the total for that option and then saving it to the database again.
+
+This communication is incredibly straightforward, it's just instructions and execution of simple instructions.
+
+The data lifecycle is roughly the same for the webinterface part of the backend.
+When the appropriate instruction gets called, the data is called or sent and then saved.
+
+The most interesting data lifecycle is through Discord.
+The data is sent by propagation, meaning that when a message is sent on either end (Discord or the web interface) this is handled by the Discord handler or the `messageHandler` and sent through to the other side.
+When a Discord user sends a message this is handled and sent directly from the Discord handler to the client via a socket broadcast.
+
+Here is a diagram:
+
+![diagram](../diagram.svg)

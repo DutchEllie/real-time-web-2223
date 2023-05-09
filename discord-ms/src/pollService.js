@@ -14,6 +14,14 @@ export class PollService {
     fs.writeFileSync("polls.json", JSON.stringify(this.polls));
   }
 
+	syncPolls() {
+		if(fs.existsSync("polls.json")) {
+			console.log("Syncing polls from polls.json");
+			const savedPolls = fs.readFileSync("polls.json", "utf8");
+			this.polls = JSON.parse(savedPolls);
+		}
+	}
+
 	createPoll(title, options) {
 		const poll = {
 			id: this.polls.length,
@@ -24,6 +32,7 @@ export class PollService {
 			})),
 		};
 
+		this.syncPolls();
 		this.polls.push(poll);
 		this.savePolls();
 
@@ -31,10 +40,12 @@ export class PollService {
 	}
 
   getPolls() {
+		this.syncPolls();
     return this.polls;
   }
 
   getPoll(id) {
+		this.syncPolls();
     return this.polls.find((poll) => poll.id == id);
   }
 
@@ -49,6 +60,8 @@ export class PollService {
     if (optionIndex == -1) {
       throw new Error("Option not found");
     }
+
+		this.syncPolls();
 
     this.polls[pollIndex].options[optionIndex].votes++;
 
