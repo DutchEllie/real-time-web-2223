@@ -142,4 +142,4 @@ When a Discord user sends a message this is handled and sent directly from the D
 
 Here is a diagram:
 
-![diagram](../diagram.svg)
+![diagram](/diagram.svg)
