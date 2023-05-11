@@ -23,6 +23,7 @@ const onConnection = (socket) => {
 	// console.log("a user connected");
 	messageHandler(io, socket, discordApp);
 	discordApp.setSocket(io);
+	console.log("Ready for connections!")
 
 	// discordApp.sendMessage();
 	// socket.emit("message", "Hello World!");
