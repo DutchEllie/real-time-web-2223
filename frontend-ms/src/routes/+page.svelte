@@ -2,7 +2,8 @@
 	// export const ssr = false;
 	import { io } from 'socket.io-client';
 
-	const socket = io('ws://localhost:3000/');
+	import { env } from "$env/dynamic/public";
+  const socket = io(env.PUBLIC_BACKEND_URL);
 
 	socket.on('connect', () => {
 		// console.log('connected');
