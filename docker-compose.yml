@@ -13,3 +13,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8083:3000"
+    volumes:
+      - "./discord-ms/polls.json:/app/polls.json"
