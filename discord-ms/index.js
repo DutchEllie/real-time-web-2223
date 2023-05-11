@@ -10,7 +10,7 @@ import messageHandler from "./handlers/messageHandler.js";
 import cors from "cors";
 
 const app = express();
-app.use(cors);
+// app.use(cors);
 const httpServer = createServer(app);
 const io = new Server(httpServer, {});
 const port = 3000;
