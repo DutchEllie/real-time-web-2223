@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend-ms
+      dockerfile: Dockerfile
+    ports:
+      - "8082:5173"
+  backend:
+    build:
+      context: ./discord-ms
+      dockerfile: Dockerfile
+    ports:
+      - "8083:3000"
