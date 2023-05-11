@@ -7,8 +7,10 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import messageHandler from "./handlers/messageHandler.js";
+import cors from "cors";
 
 const app = express();
+app.use(cors);
 const httpServer = createServer(app);
 const io = new Server(httpServer, {});
 const port = 3000;
@@ -32,4 +34,4 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-httpServer.listen(port);
+httpServer.listen(port, );
