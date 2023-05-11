@@ -92,6 +92,10 @@ export class DiscordApp {
       author: message.author.username,
     };
 
+    if(!this.socket) {
+      console.log("Socket not set");
+      return;
+    }
     this.socket.emit("discord:message:received", msg);
 
     if (message.author.bot) {
