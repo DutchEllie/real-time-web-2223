@@ -44,7 +44,8 @@ After creating that, run `npm install` followed by `npm run dev` and the project
 
 ### Frontend
 
-Inside of the `frontend-ms` directory, simply run `npm install` and `npm run dev` to run the project.
+Inside of the `frontend-ms` directory, create a `.env` file that contains the variable `PUBLIC_BACKEND_URL` which contains a variable that looks like this: `ws://localhost:3000/`.
+Then simply run `npm install` and `npm run dev` to run the project.
 
 ## Communication
 
