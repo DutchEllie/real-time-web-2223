@@ -7,11 +7,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:4173"
-  backend:
-    build:
-      context: ./discord-ms
-      dockerfile: Dockerfile
-    ports:
-      - "8083:3000"
-    volumes:
-      - "./discord-ms/polls.json:/app/polls.json"
+  # backend:
+  #   build:
+  #     context: ./discord-ms
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8083:3000"
+  #   volumes:
+  #     - "./discord-ms/polls.json:/app/polls.json"
