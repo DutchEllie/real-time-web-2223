@@ -117,7 +117,7 @@
   }
 </script>
 
-<div>
+<div class="min-h-screen">
   <!-- <div>
 		<h3 class="text-xl">Channels</h3>
   <ul class="list-disc">
@@ -131,8 +131,8 @@
   </ul>
 	</div> -->
   <div>
-    <h3>Messages</h3>
-    <ul class="list-disc">
+    <h3 class="text-xl underline underline-offset-4 mb-4">Messages</h3>
+    <ul class="">
       {#if messages}
         {#each messages as message, index}
           <li>
@@ -151,7 +151,9 @@
       {/if}
     </ul>
   </div>
+  <label for="channels">Channel Select</label>
   <select
+    class="text-slate-800 rounded p-1 mt-5"
     name="channels"
     id="channels"
     bind:value={selectedChannel}
@@ -159,17 +161,18 @@
   >
     {#if channels}
       {#each channels as channel}
-        <option value={channel.id}>{channel.name}</option>
+        <option class="" value={channel.id}>{channel.name}</option>
       {/each}
     {/if}
   </select>
   <form on:submit|preventDefault={sendMessage}>
     <input
+      class="rounded text-slate-800"
       type="text"
       name="message"
       placeholder="Message"
       bind:value={messageContent}
     />
-    <button type="submit">Submit</button>
+    <button class="rounded p-2 bg-slate-900" type="submit">Submit</button>
   </form>
 </div>

@@ -8,7 +8,8 @@
     "start": "node index.js",
     "dev": "nodemon --ignore '*.json' index.js",
     "start-forever": "forever start index.js",
-    "stop": "forever stop index.js"
+    "stop": "forever stop index.js",
+    "kill-yourself": "forever stop index.js"
   },
   "author": "",
   "license": "ISC",

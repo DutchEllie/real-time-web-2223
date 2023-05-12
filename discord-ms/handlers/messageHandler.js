@@ -18,7 +18,7 @@ export default function messageHandler(io, socket, discord) {
       const res = await discord.sendMessage(data.channel_id, data.message);
       callback(res);
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
       callback({
         status: "err",
         error: e.message,
@@ -46,7 +46,7 @@ export default function messageHandler(io, socket, discord) {
       const res = await discord.messageHistory(data.channel_id);
       callback(res);
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
       callback({
         status: "err",
         error: e.message,
@@ -56,6 +56,61 @@ export default function messageHandler(io, socket, discord) {
   };
 
   const polls = new PollService();
+
+  const poll_remove = async (data, callback) => {
+    if (!data.id) {
+      console.log("missing data in poll_remove");
+      console.log(data);
+      callback({
+        status: "err",
+        error: "missing data",
+      });
+    }
+
+    try {
+      polls.removePoll(data.id);
+      callback({
+        status: "ok",
+      });
+    } catch(e) {
+      console.log(e.message);
+      callback({
+        status: "err",
+        error: e.message,
+      });
+      return;
+    }
+  }
+
+  const poll_create = async (data, callback) => {
+    if (!data.title || !data.options) {
+      console.log("missing data in poll_create");
+      console.log(data);
+      callback({
+        status: "err",
+        error: "missing data",
+      });
+    }
+
+    try {
+      const newPoll = polls.createPoll(data.title, data.options);
+      socket.broadcast.emit("polls:update", {
+        status: "ok",
+        polls: polls.getPolls(),
+      });
+      callback({
+        status: "ok",
+        poll: newPoll
+      });
+    } catch(e) {
+      console.log(e.message);
+      callback({
+        status: "err",
+        error: e.message,
+      });
+      return;
+    }
+  }
 
   const polls_get = async (callback) => {
     const res = {
@@ -81,7 +136,7 @@ export default function messageHandler(io, socket, discord) {
         poll: polls.getPoll(data.id),
       });
     } catch(e) {
-      // console.log(e);
+      console.log(e.message);
       callback({
         status: "err",
         error: e.message,
@@ -112,7 +167,7 @@ export default function messageHandler(io, socket, discord) {
       });
 
     } catch(e) {
-      console.log(e);
+      console.log(e.message);
       callback({
         status: "err",
         error: e.message,
@@ -128,6 +183,8 @@ export default function messageHandler(io, socket, discord) {
   socket.on("polls:get", polls_get);
   socket.on("poll:get", poll_get);
   socket.on("poll:vote", poll_vote);
+  socket.on("poll:create", poll_create);
+  socket.on("poll:remove", poll_remove);
 
   // socket.on("sendMessage", sendMessage);
 }

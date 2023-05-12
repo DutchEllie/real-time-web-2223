@@ -17,15 +17,60 @@
 				console.log(response.error);
 			}
 		});
+
+		socket.on("polls:update", (response: PollResponse) => {
+			if(response.status == "ok") {
+				console.log("Polls received");
+				polls = response.polls;
+			} else {
+				console.log("Polls not received");
+				console.log(response.error);
+			}
+		});
 	});
+
+	function removePoll(e: Event, id: string) {
+		e.preventDefault();
+
+		if(!socket.connected) {
+			console.log("Socket not connected");
+			return;
+		}
+
+		if (!polls) {
+			console.log("Polls not loaded");
+			return;
+		}
+
+		socket.emit("poll:remove", {id}, (response: any) => {
+			if(response.status == "ok") {
+				if (!polls) {
+					console.log("Polls not loaded");
+					return;
+				}
+				console.log("Poll removed");
+				polls = polls?.filter(poll => poll.id != id);
+			} else {
+				console.log("Poll not removed");
+				console.log(response.error);
+			}
+		});
+
+	}
 
 </script>
 
-<div class="p-2 text-center">
-	<h2 class="text-xl">List of polls</h2>
-	{#if polls}
-		{#each polls as poll}
-			<a class="m-2 block w-fit bg-slate-400 rounded-md p-2" href="/poll/{poll.id}">{poll.title}</a>
-		{/each}
-	{/if}
+<div class="min-h-screen">
+	<div class="p-2 text-center">
+		<h2 class="text-xl">List of polls</h2>
+		{#if polls}
+			{#each polls as poll}
+				<div class="block">
+					<a class="m-2 w-fit bg-slate-400 hover:bg-slate-500 rounded-md p-2" href="/poll/{poll.id}">{poll.title}</a>
+					<button class="m-2 w-fit bg-red-400 hover:bg-red-500 rounded-md p-1" on:click|preventDefault={(e) => removePoll(e, poll.id)}>Remove</button>
+				</div>
+			{/each}
+		{/if}
+	</div>
+	<a class="p-2 bg-green-800 text-slate-100 p-3 rounded hover:bg-green-900" href="/poll/create">Create your own poll!</a>
 </div>

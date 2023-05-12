@@ -92,7 +92,7 @@ export class DiscordApp {
       author: message.author.username,
     };
 
-    if(!this.socket) {
+    if (!this.socket) {
       console.log("Socket not set");
       return;
     }
@@ -175,6 +175,11 @@ export class DiscordApp {
                 console.log("Poll embed not found");
                 return;
               }
+
+              this.socket.emit("polls:update", {
+                status: "ok",
+                polls: this.polls.getPolls(),
+              });
 
               message.channel.send({
                 embeds: [pollEmbed],

@@ -39,6 +39,17 @@ export class PollService {
 		return poll;
 	}
 
+  removePoll(id) {
+    this.syncPolls();
+    const pollIndex = this.polls.findIndex((poll) => poll.id == id);
+    if (pollIndex == -1) {
+      throw new Error("Poll not found");
+    }
+
+    this.polls.splice(pollIndex, 1);
+    this.savePolls();
+  }
+
   getPolls() {
 		this.syncPolls();
     return this.polls;
