@@ -69,6 +69,10 @@ export default function messageHandler(io, socket, discord) {
 
     try {
       polls.removePoll(data.id);
+      socket.broadcast.emit("polls:update", {
+        status: "ok",
+        polls: polls.getPolls(),
+      });
       callback({
         status: "ok",
       });

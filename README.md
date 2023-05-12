@@ -69,6 +69,11 @@ One such is `discord:messages:get` which, along with the default `status` and op
 	When a client votes on a poll, this is sent to all connected clients including the voting client, to tell the client to update the web interface.
 * `discord:message:received`
 	This is sent from the server when a Discord message is received and it tells the clients to update the interface with the newly sent message.
+* `polls:update`
+  This is used to send the client all of the polls.
+	Used when a poll is created and handled on the poll overview page.
+	This is sent when a poll is created on both Discord and the web interface.
+	The response is a `PollResponse`.
   
 ### Messages from client (browser) to server
 
@@ -101,6 +106,14 @@ This is to simplify the communication, since broadcast messages do not have to b
   This tells the server to vote on a poll.
 	The included fields are `id` for the poll's ID and a string containing the option to vote on.
 	Returned is a generic acknowledge object.
+* `poll:remove`
+  This tells the server to remove the poll.
+	The included field is the `id` of the poll that is to be removed.
+	Returned is the standard acknowledge object.
+* `poll:create`
+  This tells the server to create a poll.
+	The included fields are the `title` and the `options` as an array of options.
+	Returned is a `PollResponse` object, with the `poll` field included.
 
 ### Communication with Discord
 
